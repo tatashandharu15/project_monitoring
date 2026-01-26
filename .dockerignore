@@ -1,0 +1,8 @@
+.git
+.venv
+__pycache__
+frontend
+try.ipynb
+*.pyc
+.DS_Store
+.env

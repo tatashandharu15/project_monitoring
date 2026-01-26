@@ -12,7 +12,8 @@ export default function RefreshButton() {
       setLoading(true);
       try {
         // Panggil API dengan parameter refresh=true
-        await fetch("http://127.0.0.1:8000/api/projects?refresh=true");
+        // Gunakan relative path /api yang akan di-proxy oleh Next.js atau Nginx
+        await fetch("/api/projects?refresh=true");
         
         // Refresh halaman agar data baru muncul
         router.refresh();
