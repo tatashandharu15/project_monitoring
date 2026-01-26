@@ -55,4 +55,5 @@ def normalize_record(record: Dict) -> Dict:
         "hps_value": normalize_hps(record.get("hps")),
         "start_date": dates["start_date"],
         "end_date": dates["end_date"],
+        "fetched_at": datetime.now() # Tambahkan timestamp saat data diambil
     }
