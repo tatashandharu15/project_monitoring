@@ -7,32 +7,32 @@ export default function ProjectRunning({ projects }: { projects: any[] }) {
   const runningProjects = [...projects, ...projects];
 
   return (
-    <div className="w-full overflow-hidden mb-8 py-2 relative group">
+    <div className="w-full overflow-hidden mb-8 lg:mb-12 py-2 lg:py-4 relative group">
       {/* Masking gradients untuk efek fade di kiri/kanan */}
-      <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none" />
-      <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-20 lg:w-32 h-full bg-gradient-to-r from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-20 lg:w-32 h-full bg-gradient-to-l from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none" />
 
-      <div className="flex animate-scroll gap-4 w-max">
+      <div className="flex animate-scroll gap-4 lg:gap-8 w-max">
         {runningProjects.map((p, i) => {
           const isIT = p.category === "IT";
           return (
-            <div key={`${p.url}-${i}`} className="w-[450px] flex-shrink-0">
-               <div className={`border rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-24 ${
+            <div key={`${p.url}-${i}`} className="w-[450px] lg:w-[600px] flex-shrink-0">
+               <div className={`border rounded-lg lg:rounded-xl p-3 lg:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-24 lg:h-32 ${
                  isIT 
                    ? "bg-emerald-50/50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800" 
                    : "bg-white dark:bg-gray-800 dark:border-gray-700"
                }`}>
-                  <div className="flex justify-between items-center mb-1">
+                  <div className="flex justify-between items-center mb-1 lg:mb-2">
                       <Badge category={p.category} />
-                    <span className="text-[10px] text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] lg:text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 lg:px-3 py-0.5 lg:py-1 rounded-full">
                       {p.lpse}
                     </span>
                 </div>
-                <h4 className="font-semibold text-sm text-gray-900 dark:text-gray-100 line-clamp-1 mb-1" title={p.judul}>
+                <h4 className="font-semibold text-sm lg:text-lg text-gray-900 dark:text-gray-100 line-clamp-1 mb-1" title={p.judul}>
                     {p.judul}
                 </h4>
-                <div className="flex justify-between items-center text-xs text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700/50 pt-1 mt-auto">
-                    <span className="truncate max-w-[200px]" title={p.satker}>{p.satker}</span>
+                <div className="flex justify-between items-center text-xs lg:text-base text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700/50 pt-1 lg:pt-2 mt-auto">
+                    <span className="truncate max-w-[200px] lg:max-w-[300px]" title={p.satker}>{p.satker}</span>
                     <span className="font-bold text-gray-900 dark:text-gray-200">Rp {p.hps_value.toLocaleString("id-ID")}</span>
                 </div>
             </div>

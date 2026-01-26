@@ -20,18 +20,18 @@ export default function ImageRunning({ images }: { images: string[] }) {
       <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-[var(--background)] to-transparent z-10 pointer-events-none" />
       <div className="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-[var(--background)] to-transparent z-10 pointer-events-none" />
 
-      <div className="flex animate-scroll gap-16 w-max items-center py-2">
+      <div className="flex animate-scroll gap-16 lg:gap-24 w-max items-center py-4">
         {displayImages.map((img, i) => (
           <div 
             key={`${img}-${i}`} 
-            className="relative h-12 w-32 flex-shrink-0 transition-all duration-500 opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            className="relative h-16 w-40 lg:h-24 lg:w-60 flex-shrink-0 transition-all duration-500 opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
           >
             <Image 
               src={`/logos/${img}`} 
               alt="Logo" 
               fill
               className="object-contain"
-              sizes="128px"
+              sizes="(max-width: 1920px) 160px, 240px"
             />
           </div>
         ))}

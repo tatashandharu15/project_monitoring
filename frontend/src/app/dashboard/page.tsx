@@ -29,16 +29,16 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-6 md:p-8 lg:p-12 xl:p-16 max-w-[2400px] mx-auto min-h-screen">
       <ITAlert projects={recentProjects} />
       
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Dashboard Pengadaan</h1>
+      <div className="flex justify-between items-center mb-8 lg:mb-12">
+        <h1 className="text-2xl lg:text-4xl font-bold tracking-tight">Dashboard Pengadaan</h1>
       </div>
 
       <ProjectRunning projects={runningProjects} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 xl:gap-10 2xl:gap-12 my-10">
         {recentProjects.map((p: any) => (
           <ProjectCard 
             key={p.url} 
@@ -50,7 +50,7 @@ export default async function DashboardPage() {
 
       <ImageRunning images={logoFiles} />
 
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-12 lg:mt-20 mb-10">
         <RefreshButton />
       </div>
     </div>

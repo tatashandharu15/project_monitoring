@@ -16,7 +16,7 @@ export default function StatusBadge({
       : category;
 
   return (
-    <span className={`px-2 py-1 text-white rounded text-xs ${color}`}>
+    <span className={`px-2 py-1 lg:px-3 lg:py-1.5 text-white rounded text-xs lg:text-sm font-bold ${color}`}>
       {label}
     </span>
   );
