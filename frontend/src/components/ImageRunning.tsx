@@ -15,23 +15,23 @@ export default function ImageRunning({ images }: { images: string[] }) {
   }
 
   return (
-    <div className="w-full overflow-hidden mt-10 mb-6 relative z-0">
+    <div className="w-full overflow-hidden relative z-0 h-full flex items-center">
       {/* Masking gradients yang sesuai dengan background halaman */}
-      <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-[var(--background)] to-transparent z-10 pointer-events-none" />
-      <div className="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-[var(--background)] to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-12 h-full bg-gradient-to-r from-[var(--background)] to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-12 h-full bg-gradient-to-l from-[var(--background)] to-transparent z-10 pointer-events-none" />
 
-      <div className="flex animate-scroll gap-16 lg:gap-24 w-max items-center py-4">
+      <div className="flex animate-scroll gap-8 w-max items-center">
         {displayImages.map((img, i) => (
           <div 
             key={`${img}-${i}`} 
-            className="relative h-16 w-40 lg:h-24 lg:w-60 flex-shrink-0 transition-all duration-500 opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            className="relative h-10 w-24 flex-shrink-0 transition-all duration-500 opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
           >
             <Image 
               src={`/logos/${img}`} 
               alt="Logo" 
               fill
               className="object-contain"
-              sizes="(max-width: 1920px) 160px, 240px"
+              sizes="96px"
             />
           </div>
         ))}

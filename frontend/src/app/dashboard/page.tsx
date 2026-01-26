@@ -29,16 +29,24 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="p-6 md:p-8 lg:p-12 xl:p-16 max-w-[2400px] mx-auto min-h-screen">
+    <div className="h-screen max-h-screen flex flex-col p-4 lg:p-6 overflow-hidden bg-gray-50 dark:bg-gray-900">
       <ITAlert projects={recentProjects} />
       
-      <div className="flex justify-between items-center mb-8 lg:mb-12">
-        <h1 className="text-2xl lg:text-4xl font-bold tracking-tight">Dashboard Pengadaan</h1>
+      {/* Header Compact - Fixed Height */}
+      <div className="flex justify-between items-center mb-4 flex-shrink-0 h-16">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Dashboard Pengadaan</h1>
+        <div className="transform scale-75 origin-right">
+          <RefreshButton />
+        </div>
       </div>
 
-      <ProjectRunning projects={runningProjects} />
+      {/* Running Text - Compact */}
+      <div className="flex-shrink-0 mb-4">
+        <ProjectRunning projects={runningProjects} />
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 xl:gap-10 2xl:gap-12 my-10">
+      {/* Main Grid - Auto Height to Fill */}
+      <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
         {recentProjects.map((p: any) => (
           <ProjectCard 
             key={p.url} 
@@ -48,10 +56,9 @@ export default async function DashboardPage() {
         ))}
       </div>
 
-      <ImageRunning images={logoFiles} />
-
-      <div className="flex justify-center mt-12 lg:mt-20 mb-10">
-        <RefreshButton />
+      {/* Footer / Image Ticker - Compact */}
+      <div className="flex-shrink-0 h-16 lg:h-20 mt-auto">
+        <ImageRunning images={logoFiles} />
       </div>
     </div>
   );

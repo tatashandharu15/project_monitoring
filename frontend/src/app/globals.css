@@ -38,39 +38,13 @@ body {
   animation-play-state: paused;
 }
 
-/* TV & 4K Optimization */
+/* TV & 4K Optimization - Removed aggressive scaling for single screen fit */
 @media (min-width: 1920px) {
-  html {
-    font-size: 22px; /* Base font scaling for 10-foot UI */
-  }
-
-  body {
-    line-height: 1.7; /* Increased readability */
-    font-weight: 500; /* Avoid thin fonts */
-  }
-
   /* Global Focus Visibility for Remote Control */
   *:focus-visible {
     outline: 4px solid #fbbf24 !important; /* Amber-400 */
     outline-offset: 4px;
     box-shadow: 0 0 0 6px rgba(0,0,0,0.7);
     z-index: 50;
-  }
-
-  /* Larger Scrollbars for visibility */
-  ::-webkit-scrollbar {
-    width: 16px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #666;
-    border-radius: 8px;
-    border: 4px solid rgba(0,0,0,0);
-    background-clip: content-box;
-  }
-}
-
-@media (min-width: 3840px) {
-  html {
-    font-size: 32px; /* Massive scaling for 4K native rendering */
   }
 }

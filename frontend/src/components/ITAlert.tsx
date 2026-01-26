@@ -61,12 +61,12 @@ export default function ITAlert({ projects }: { projects: any[] }) {
   if (!visible || !project) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-6 lg:p-12 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-lg lg:max-w-3xl w-full p-8 lg:p-12 border border-gray-100 dark:border-gray-700 transform transition-all scale-100 animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-gray-100 dark:border-gray-700 transform transition-all scale-100 animate-in zoom-in-95 duration-200">
         <div className="flex flex-col items-center text-center">
-          <div className="w-20 h-20 lg:w-24 lg:h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 lg:mb-8">
+          <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
             <svg 
-              className="w-10 h-10 lg:w-14 lg:h-14 text-green-600 dark:text-green-400" 
+              className="w-8 h-8 text-green-600 dark:text-green-400" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -75,27 +75,27 @@ export default function ITAlert({ projects }: { projects: any[] }) {
             </svg>
           </div>
           
-          <h2 className="text-2xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
             IT Project Detected!
           </h2>
           
-          <p className="text-gray-600 dark:text-gray-300 mb-8 lg:mb-10 text-base lg:text-xl leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-300 mb-6 text-sm leading-relaxed">
             Ditemukan proyek baru kategori IT:<br/>
-            <span className="font-bold text-gray-800 dark:text-gray-100 mt-2 block text-lg lg:text-2xl">
+            <span className="font-bold text-gray-800 dark:text-gray-100 mt-1 block text-base">
               {project.judul}
             </span>
           </p>
           
-          <div className="flex gap-4 lg:gap-6 w-full">
+          <div className="flex gap-3 w-full">
             <button
               onClick={handleClose}
-              className="flex-1 px-6 py-4 lg:py-5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-2xl font-bold text-lg lg:text-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:ring-4 focus:ring-gray-400 outline-none"
+              className="flex-1 px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-bold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:ring-4 focus:ring-gray-400 outline-none"
             >
               Close
             </button>
             <button
               onClick={handleDetail}
-              className="flex-1 px-6 py-4 lg:py-5 bg-green-600 text-white rounded-2xl font-bold text-lg lg:text-xl hover:bg-green-700 shadow-lg shadow-green-600/20 transition-all hover:scale-[1.02] focus:ring-4 focus:ring-green-400 outline-none"
+              className="flex-1 px-4 py-2.5 bg-green-600 text-white rounded-xl font-bold hover:bg-green-700 shadow-lg shadow-green-600/20 transition-all hover:scale-[1.02] focus:ring-4 focus:ring-green-400 outline-none"
             >
               Lihat Detail
             </button>
