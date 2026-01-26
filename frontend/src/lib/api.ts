@@ -1,7 +1,13 @@
 const API_BASE = process.env.API_URL || "http://127.0.0.1:8000/api";
 
-export async function fetchStats() {
-  const res = await fetch(`${API_BASE}/stats`, { cache: "no-store" });
+export async function fetchStats(refresh: boolean = false) {
+  let url = `${API_BASE}/stats?`;
+
+  if (refresh) {
+    url += `refresh=true&`;
+  }
+
+  const res = await fetch(url, { cache: "no-store" });
   return res.json();
 }
 

@@ -2,9 +2,15 @@
 
 import { useEffect, useState } from "react";
 
-export default function ITAlert({ projects }: { projects: any[] }) {
+type Project = {
+  url: string;
+  judul: string;
+  category: string;
+};
+
+export default function ITAlert({ projects }: { projects: Project[] }) {
   const [visible, setVisible] = useState(false);
-  const [project, setProject] = useState<any>(null);
+  const [project, setProject] = useState<Project | null>(null);
 
   useEffect(() => {
     // Filter proyek IT

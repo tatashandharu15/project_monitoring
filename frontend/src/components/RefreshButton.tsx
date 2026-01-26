@@ -1,30 +1,86 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
+type Stats = {
+  total: number;
+  it: number;
+  non_it: number;
+  review: number;
+};
 
 export default function RefreshButton() {
   const [loading, setLoading] = useState(false);
+  const [lastStats, setLastStats] = useState<Stats | null>(null);
   const router = useRouter();
 
   const handleRefresh = async () => {
-    if (confirm("Apakah Anda yakin ingin mengambil data terbaru dari sumber? Proses ini memakan waktu beberapa detik.")) {
-      setLoading(true);
-      try {
-        // Panggil API dengan parameter refresh=true
-        // Gunakan relative path /api yang akan di-proxy oleh Next.js atau Nginx
-        await fetch("/api/projects?refresh=true");
-        
-        // Refresh halaman agar data baru muncul
-        router.refresh();
-      } catch (e) {
-        console.error(e);
-        alert("Gagal refresh data");
-      } finally {
-        setLoading(false);
-      }
+    const ok = confirm(
+      "Apakah Anda yakin ingin mengambil data terbaru dari sumber? Proses ini memakan waktu beberapa detik."
+    );
+    if (!ok) return;
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/stats?refresh=true", { cache: "no-store" });
+      const stats = (await res.json()) as Stats;
+      setLastStats(stats);
+      router.refresh();
+    } catch (e) {
+      console.error(e);
+      alert("Gagal refresh data");
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadInitialStats = async () => {
+      try {
+        const res = await fetch("/api/stats", { cache: "no-store" });
+        const stats = (await res.json()) as Stats;
+        if (!cancelled) {
+          setLastStats(stats);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    loadInitialStats();
+
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch("/api/stats?refresh=true", {
+          cache: "no-store",
+        });
+        const stats = (await res.json()) as Stats;
+
+        if (!cancelled) {
+          if (
+            !lastStats ||
+            stats.total !== lastStats.total ||
+            stats.it !== lastStats.it ||
+            stats.non_it !== lastStats.non_it ||
+            stats.review !== lastStats.review
+          ) {
+            setLastStats(stats);
+            router.refresh();
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }, 5 * 60 * 1000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, [router, lastStats]);
 
   return (
     <button

@@ -2,9 +2,17 @@
 
 import Badge from "./StatusBadge";
 
-export default function ProjectRunning({ projects }: { projects: any[] }) {
-  // Gandakan array agar looping seamless
-  const runningProjects = [...projects, ...projects];
+type Project = {
+  url: string;
+  judul: string;
+  lpse: string;
+  satker: string;
+  hps_value: number;
+  category: string;
+};
+
+export default function ProjectRunning({ projects }: { projects: Project[] }) {
+  const runningProjects: Project[] = [...projects, ...projects];
 
   return (
     <div className="w-full overflow-hidden mb-3 py-1 relative group">

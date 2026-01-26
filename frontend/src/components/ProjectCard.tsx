@@ -14,7 +14,27 @@ function highlight(text: string, keywords: string[]) {
   return result;
 }
 
-export default function ProjectCard({ project, showAnalysis = true, id }: { project: any, showAnalysis?: boolean, id?: string }) {
+type Project = {
+  url: string;
+  judul: string;
+  lpse: string;
+  satker: string;
+  hps_value: number;
+  category: string;
+  matched_keywords?: string[];
+  tahap?: string;
+  ai_reason?: string;
+};
+
+export default function ProjectCard({
+  project,
+  showAnalysis = true,
+  id,
+}: {
+  project: Project;
+  showAnalysis?: boolean;
+  id?: string;
+}) {
   const isIT = project.category === "IT";
   
   return (
@@ -35,7 +55,10 @@ export default function ProjectCard({ project, showAnalysis = true, id }: { proj
       <h3 
         className="font-bold text-sm leading-tight mb-2 text-gray-900 dark:text-white line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
         dangerouslySetInnerHTML={{
-          __html: project.category === 'IT' ? highlight(project.judul, project.matched_keywords) : project.judul,
+          __html:
+            project.category === "IT"
+              ? highlight(project.judul, project.matched_keywords ?? [])
+              : project.judul,
         }}
       />
 

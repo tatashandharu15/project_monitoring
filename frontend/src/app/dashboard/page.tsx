@@ -7,12 +7,22 @@ import ITAlert from "@/components/ITAlert";
 import fs from "fs";
 import path from "path";
 
-export default async function DashboardPage() {
-  const projects = await fetchProjects();
+type Project = {
+  url: string;
+  judul: string;
+  lpse: string;
+  satker: string;
+  hps_value: number;
+  category: string;
+  matched_keywords?: string[];
+  tahap?: string;
+  ai_reason?: string;
+};
 
-  // Ambil 6 proyek terbaru agar grid rapi (2x3 atau 3x2)
+export default async function DashboardPage() {
+  const projects = (await fetchProjects()) as Project[];
+
   const recentProjects = projects.slice(0, 6);
-  // Ambil 10 proyek untuk running ticker
   const runningProjects = projects.slice(0, 10);
 
   // Ambil list logo dari folder public/logos
@@ -47,9 +57,8 @@ export default async function DashboardPage() {
         <ProjectRunning projects={runningProjects} />
       </div>
 
-      {/* Main Grid - Auto Height to Fill */}
       <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-0">
-        {recentProjects.map((p: any) => (
+        {recentProjects.map((p) => (
           <ProjectCard 
             key={p.url} 
             project={p} 

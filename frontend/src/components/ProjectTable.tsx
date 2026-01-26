@@ -14,10 +14,20 @@ function highlight(text: string, keywords: string[]) {
   return result;
 }
 
+type Project = {
+  url: string;
+  judul: string;
+  lpse: string;
+  satker: string;
+  hps_value: number;
+  category: string;
+  matched_keywords?: string[];
+};
+
 export default function ProjectTable({
   projects,
 }: {
-  projects: any[];
+  projects: Project[];
 }) {
   // 🔹 Dedup by URL
   const unique = Array.from(
@@ -41,7 +51,7 @@ export default function ProjectTable({
             <td
               className="p-2"
               dangerouslySetInnerHTML={{
-                __html: highlight(p.judul, p.matched_keywords),
+                __html: highlight(p.judul, p.matched_keywords ?? []),
               }}
             />
             <td className="p-2">{p.lpse}</td>
