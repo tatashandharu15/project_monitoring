@@ -103,7 +103,11 @@ def load_data(force_refresh: bool = False):
         # Jika crawl gagal, kembalikan data lama jika ada
         if existing_data:
             return existing_data
-        raise e
+        
+        # Jika tidak ada data lama (first run) dan crawl gagal, return empty list
+        # Jangan crash agar dashboard tetap bisa dibuka
+        print("[REPOSITORY] Warning: First run crawl failed. Returning empty list.")
+        return []
 
     processed = []
     new_items_count = 0
