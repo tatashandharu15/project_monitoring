@@ -1,4 +1,4 @@
-const API_BASE = process.env.API_URL || "http://127.0.0.1:8000/api";
+const API_BASE = process.env.API_URL || "http://127.0.0.1:9001/api";
 
 export async function fetchStats(refresh: boolean = false) {
   let url = `${API_BASE}/stats?`;
