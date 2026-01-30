@@ -24,6 +24,7 @@ type Project = {
   matched_keywords?: string[];
   tahap?: string;
   ai_reason?: string;
+  ai_category?: string;
 };
 
 export default function ProjectCard({
@@ -84,7 +85,9 @@ export default function ProjectCard({
              project.ai_reason.toLowerCase().includes("limit") ||
              project.ai_reason.toLowerCase().includes("disabled"))
               ? "bg-amber-50 dark:bg-amber-900/20 text-amber-800 dark:text-amber-300 border-amber-100 dark:border-amber-800"
-              : "bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 border-blue-100 dark:border-blue-800"
+              : (project.category === "IT" || project.ai_category === "IT")
+                ? "bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 border-green-100 dark:border-green-800"
+                : "bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 border-blue-100 dark:border-blue-800"
           }`}>
             <strong className="block mb-0.5 opacity-75">AI:</strong> 
             <span className="leading-tight line-clamp-2">{project.ai_reason}</span>
