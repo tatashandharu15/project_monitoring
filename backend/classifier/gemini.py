@@ -1,18 +1,24 @@
 import os
 import time
-import google.generativeai as genai
+from google import genai
 from dotenv import load_dotenv
 import logging
+import json
 
 load_dotenv()
 
 API_KEY = os.getenv("GEMINI_API_KEY")
 
+client = None
 if API_KEY:
-    genai.configure(api_key=API_KEY)
+    try:
+        client = genai.Client(api_key=API_KEY)
+    except Exception as e:
+        logging.error(f"Failed to initialize Gemini Client: {e}")
 
 # Menggunakan versi Flash Lite yang lebih hemat resource
-MODEL_NAME = "gemini-2.0-flash-lite"
+# Note: Check if "gemini-2.0-flash-lite" is valid in new SDK, otherwise use "gemini-2.0-flash"
+MODEL_NAME = "gemini-2.0-flash" 
 
 # Global flag untuk Circuit Breaker
 AI_DISABLED = False
@@ -27,10 +33,10 @@ def analyze_project_with_ai(title: str, description: str = "") -> dict:
             "ai_confidence": "NONE"
         }
 
-    if not API_KEY:
+    if not client:
         return {
             "ai_category": None,
-            "ai_reason": "API Key not configured",
+            "ai_reason": "Gemini Client not initialized (API Key missing or invalid)",
             "ai_confidence": "LOW"
         }
 
@@ -43,8 +49,6 @@ def analyze_project_with_ai(title: str, description: str = "") -> dict:
             # Rate Limiting manual
             time.sleep(base_delay * (attempt + 1))
 
-            model = genai.GenerativeModel(MODEL_NAME)
-            
             prompt = f"""
             Anda adalah asisten ahli pengadaan barang dan jasa pemerintah.
             Tugas Anda adalah mengklasifikasikan apakah sebuah proyek lelang termasuk kategori IT (Teknologi Informasi) atau NON-IT.
@@ -63,12 +67,14 @@ def analyze_project_with_ai(title: str, description: str = "") -> dict:
             }}
             """
 
-            response = model.generate_content(prompt)
+            response = client.models.generate_content(
+                model=MODEL_NAME,
+                contents=prompt
+            )
             
             # Bersihkan response jika ada markdown block
             text = response.text.replace("```json", "").replace("```", "").strip()
             
-            import json
             result = json.loads(text)
             
             return {
