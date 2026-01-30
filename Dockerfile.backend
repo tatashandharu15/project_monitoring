@@ -18,9 +18,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source code backend
 COPY backend backend
 
-# Copy script check_models.py (jika diperlukan)
-COPY check_models.py .
-
 # Buat direktori data untuk persistence (akan dimount via volume)
 RUN mkdir -p data
 

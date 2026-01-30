@@ -4,6 +4,5 @@ requests
 beautifulsoup4
 python-dateutil
 lxml
-google-genai
 python-dotenv
 groq
