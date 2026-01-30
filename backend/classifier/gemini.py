@@ -1,16 +1,23 @@
 import os
 import time
-from google import genai
 from dotenv import load_dotenv
 import logging
 import json
 
 load_dotenv()
 
+# Try to import google.genai, handle failure gracefully
+try:
+    from google import genai
+    HAS_GEMINI_SDK = True
+except ImportError:
+    logging.error("google-genai SDK not installed or version mismatch.")
+    HAS_GEMINI_SDK = False
+
 API_KEY = os.getenv("GEMINI_API_KEY")
 
 client = None
-if API_KEY:
+if API_KEY and HAS_GEMINI_SDK:
     try:
         client = genai.Client(api_key=API_KEY)
     except Exception as e:
@@ -26,6 +33,13 @@ AI_DISABLED = False
 def analyze_project_with_ai(title: str, description: str = "") -> dict:
     global AI_DISABLED
     
+    if not HAS_GEMINI_SDK:
+        return {
+            "ai_category": None,
+            "ai_reason": "Gemini SDK missing (ImportError)",
+            "ai_confidence": "LOW"
+        }
+
     if AI_DISABLED:
         return {
             "ai_category": None,
