@@ -30,6 +30,17 @@ export default function ITAlert({ projects }: { projects: Project[] }) {
     }
   }, [projects]);
 
+  // Auto-close after 2 minutes (120000ms)
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (visible && project) {
+      timeout = setTimeout(() => {
+        handleClose();
+      }, 120000); // 2 menit
+    }
+    return () => clearTimeout(timeout);
+  }, [visible, project]);
+
   const handleClose = () => {
     if (project) {
       localStorage.setItem("lastAckITProject", project.url);
