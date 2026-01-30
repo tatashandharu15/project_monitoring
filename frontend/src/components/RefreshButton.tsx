@@ -27,12 +27,19 @@ export default function RefreshButton() {
       if (!res.ok) {
         let errorMsg = `Server error: ${res.status} ${res.statusText}`;
         try {
-          const errorBody = await res.json();
-          if (errorBody.detail) {
-            errorMsg += ` - ${errorBody.detail}`;
+          const text = await res.text();
+          try {
+            const errorBody = JSON.parse(text);
+            if (errorBody.detail) {
+              errorMsg += ` - ${errorBody.detail}`;
+            } else {
+               errorMsg += ` - ${text.substring(0, 100)}`;
+            }
+          } catch {
+             errorMsg += ` - ${text.substring(0, 100)}`;
           }
         } catch (e) {
-          // ignore if not json
+          // ignore if cannot read text
         }
         throw new Error(errorMsg);
       }
