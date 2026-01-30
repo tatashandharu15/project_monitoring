@@ -17,19 +17,22 @@ export default function RefreshButton() {
 
   const handleRefresh = async () => {
     const ok = confirm(
-      "Apakah Anda yakin ingin mengambil data terbaru dari sumber? Proses ini memakan waktu beberapa detik."
+      "Apakah Anda yakin ingin mengambil data terbaru dari sumber? Proses ini memakan waktu 1-2 menit tergantung respon server sumber."
     );
     if (!ok) return;
 
     setLoading(true);
     try {
       const res = await fetch("/api/stats?refresh=true", { cache: "no-store" });
+      if (!res.ok) {
+        throw new Error(`Server error: ${res.status} ${res.statusText}`);
+      }
       const stats = (await res.json()) as Stats;
       setLastStats(stats);
       router.refresh();
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      alert("Gagal refresh data");
+      alert(`Gagal refresh data: ${e.message || "Unknown error"}`);
     } finally {
       setLoading(false);
     }
