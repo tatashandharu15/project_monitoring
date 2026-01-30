@@ -127,6 +127,11 @@ def load_data(force_refresh: bool = False):
     print(f"[REPOSITORY] Update complete. New items classified: {new_items_count}")
     
     _DATA_CACHE = processed
-    save_to_file(processed)  # Simpan hasil gabungan ke file
+    
+    try:
+        save_to_file(processed)  # Simpan hasil gabungan ke file
+    except Exception as e:
+        print(f"[REPOSITORY] Warning: Failed to save data to file: {e}")
+        # We continue even if save fails, so the user gets the data
 
     return _DATA_CACHE

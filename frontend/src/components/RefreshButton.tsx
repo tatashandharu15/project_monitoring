@@ -25,7 +25,16 @@ export default function RefreshButton() {
     try {
       const res = await fetch("/api/stats?refresh=true", { cache: "no-store" });
       if (!res.ok) {
-        throw new Error(`Server error: ${res.status} ${res.statusText}`);
+        let errorMsg = `Server error: ${res.status} ${res.statusText}`;
+        try {
+          const errorBody = await res.json();
+          if (errorBody.detail) {
+            errorMsg += ` - ${errorBody.detail}`;
+          }
+        } catch (e) {
+          // ignore if not json
+        }
+        throw new Error(errorMsg);
       }
       const stats = (await res.json()) as Stats;
       setLastStats(stats);
