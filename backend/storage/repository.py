@@ -97,7 +97,8 @@ def load_data(force_refresh: bool = False):
     existing_map = {item.get("url"): item for item in existing_data if item.get("url")}
     
     try:
-        raw = crawl_pages(pages=(1, 3))
+        # Cukup crawl halaman 1 untuk data terbaru agar cepat
+        raw = crawl_pages(pages=[1])
     except Exception as e:
         print(f"[REPOSITORY] Crawl failed: {e}")
         # Jika crawl gagal, kembalikan data lama jika ada
@@ -122,11 +123,18 @@ def load_data(force_refresh: bool = False):
             processed.append(existing_map[url])
         else:
             # Data benar-benar baru -> Panggil AI
-            print(f"[REPOSITORY] New item found: {url} -> Calling AI...")
-            normalized = normalize_record(item)
-            classified = classify_record(normalized)
-            processed.append(classified)
-            new_items_count += 1
+            try:
+                print(f"[REPOSITORY] New item found: {url} -> Calling AI...")
+                normalized = normalize_record(item)
+                classified = classify_record(normalized)
+                processed.append(classified)
+                new_items_count += 1
+            except Exception as e:
+                print(f"[REPOSITORY] Error processing item {url}: {e}")
+                # Jika gagal process 1 item, jangan crash semua
+                # Masukkan sebagai unclassified atau skip
+                # Kita skip saja untuk safety
+                continue
             
     print(f"[REPOSITORY] Update complete. New items classified: {new_items_count}")
     
