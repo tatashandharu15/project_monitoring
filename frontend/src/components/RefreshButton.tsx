@@ -31,15 +31,15 @@ export default function RefreshButton() {
           try {
             const errorBody = JSON.parse(text);
             if (errorBody.detail) {
-              errorMsg += ` - ${errorBody.detail}`;
+              errorMsg += `\nDetail: ${errorBody.detail}`;
             } else {
-               errorMsg += ` - ${text.substring(0, 100)}`;
+               errorMsg += `\nBody: ${text.substring(0, 200)}`;
             }
           } catch {
-             errorMsg += ` - ${text.substring(0, 100)}`;
+             errorMsg += `\nRaw Body: ${text.substring(0, 200)}`;
           }
         } catch (e) {
-          // ignore if cannot read text
+          errorMsg += "\n(Could not read response body)";
         }
         throw new Error(errorMsg);
       }
@@ -48,7 +48,7 @@ export default function RefreshButton() {
       router.refresh();
     } catch (e: any) {
       console.error(e);
-      alert(`Gagal refresh data: ${e.message || "Unknown error"}`);
+      alert(`Gagal refresh data:\n${e.message || "Unknown error"}`);
     } finally {
       setLoading(false);
     }
